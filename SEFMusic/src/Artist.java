@@ -124,20 +124,88 @@ public class Artist {
                 return false;
         }
 
+//        CONDITION 3
+//        Address must follow format: City|State|Country
+
+//        CONDITION 4
+//        The Artist Bio must be between 10 to 30 words
+        StringTokenizer stringTokenizer1 = new StringTokenizer(Bio);
+        int bioWords = stringTokenizer1.countTokens();
+        System.out.println("BioWords: " + bioWords);
+        if (bioWords < 10 || bioWords > 30) {
+            System.out.println("Bio is either less than 10 words or more than 30");
+            return false;
+        }
+
+//        CONDITION 5
+//        The Artist Occupation must be
+        System.out.println("Occupations size: " + Occupations.size());
+        if (Occupations.size() < 1 || Occupations.size() > 5) {
+            System.out.println("Artist must have 1 occupation and no great than 5");
+            return false;
+        }
+
+//        CONDITION 6
+//        Artist can only have maximum of three awards
+        System.out.println(Awards);
+        if (Awards.size() > 3) {
+            System.out.println("Artist Award must be less than 3");
+            return false;
+        }
+
+//        Format should be YEAR, TITLE
+        for (String award : Awards) {
+            String[] AwardsSplit = award.split(", ");
+            String years = AwardsSplit[0];
+            String titles = AwardsSplit[1];
+            System.out.println("Year: " + years);
+            System.out.println("Title: " + titles);
+            if (!years.matches("\\d\\d\\d\\d")) {
+                System.out.println(years + " Year does not match regex");
+                return false;
+            }
+//        Title should be between 4 and 10 words
+            StringTokenizer stringTokenizer2 = new StringTokenizer(titles);
+            int titleWords = stringTokenizer2.countTokens();
+            System.out.println("TitleWOrds: " + titleWords);
+            if (titleWords < 4 || titleWords > 10) {
+                System.out.println("Title is either less than 4 or greater than 10 words");
+                return false;
+            }
+        }
+
+//        CONDITION 7
+//        Artist should be active in at least two music genres and a maximum of five genres.
+        System.out.println(Genres);
+        System.out.println("Genres size: " + Genres.size());
+        if (Genres.size() < 2 || Genres.size() > 5) {
+            System.out.println("Artist must have 2 genres and maximum of 5");
+            return false;
+        }
+
+        if (Genres.contains("Pop") && Genres.contains("Rock")) {
+            System.out.println("Artist cannot be active in Pop and Rock");
+            return false;
+        }
 
 
-//        addArtistAddress(City, State, Country);
 
-        System.out.println("THIS IS MY LIST OF AWARDS... " + Awards + " With a size of: " + Awards.size());
 
-        System.out.println("Artist Details Added");
+
+
+
+
+
+
+
+//        System.out.println("This is where i live: " + Address);
+//        System.out.println("Artist Details Added");
         return true;
     }
 
 
 //    public String addArtistAddress(String city, String state, String country) {
-////        CONDITION 3
-////        Address must follow format: City|State|Country
+////
 //        City = city;
 //        State = state;
 //        Country = country;
