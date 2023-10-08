@@ -24,7 +24,7 @@ class ArtistTest {
         ArrayList<String> Genres = new ArrayList<>();
         Genres.add("Classical");
         Genres.add("Jazz");
-        Genres.add("Pop");
+//        Genres.add("Pop");
         Genres.add("Rock");
         ArrayList<String> Awards = new ArrayList<>();
         Awards.add("2023, Academy Award for Best Original Score");
@@ -64,8 +64,23 @@ class ArtistTest {
 
 //        testCase1Artist1.getAddressList();
 
+        Artist TESTCASE2 = new Artist(
+                ArtistID,
+                Name,
+                Address,
+                Birthdate,
+                Bio,
+                Occupations,
+                Genres,
+                Awards,
+                City,
+                State,
+                Country);
 
 
+        TESTCASE2.UpdateArtist();
+        TESTCASE2.setArtistID("666JACKG!!");
+        TESTCASE2.getArtistID();
 
 
         System.out.println("Test Complete");

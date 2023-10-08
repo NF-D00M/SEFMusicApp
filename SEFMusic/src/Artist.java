@@ -30,14 +30,7 @@ public class Artist {
         Country = country;
     }
 
-    public String getArtistID() {
-        System.out.println("getArtistID: " + ID);
-        return ID;
-    }
-    public String getBirthdate() {
-        System.out.println("getBirthdate: " + Birthdate);
-        return Birthdate;
-    }
+
 
     public boolean addArtist() {
 //        CONDITION 1
@@ -46,6 +39,7 @@ public class Artist {
             System.out.println("Artist ID must be 10 characters long.");
             return false;
         }
+//        setArtistID(ID);
 
 //        Artist ID must have first three characters between 5 - 9.
 //          Artist ID Char 1
@@ -196,34 +190,37 @@ public class Artist {
 
 
 
-
-
-//        System.out.println("This is where i live: " + Address);
-//        System.out.println("Artist Details Added");
+        System.out.println("Artist Details Added");
         return true;
     }
 
 
-//    public String addArtistAddress(String city, String state, String country) {
-////
-//        City = city;
-//        State = state;
-//        Country = country;
-//
-//        Address = new ArrayList<String>();
-//        Address.add(City);
-//        Address.add(State);
-//        Address.add(Country);
-//
-//        System.out.println(City + State + Country);
-//
-//        return city + " " + state + " " + country;
-//    }
-//
-//    public ArrayList<String> getAddressList() {
-//        System.out.println(Address);
-//        return Address;
-//    }
+    public boolean UpdateArtist() {
+        System.out.println("CHECK: " + getArtistID());
+        System.out.println();
+        return true;
+    }
+
+    public boolean setArtistID(String id) {
+//        CONDITION 1
+        ID = id;
+        if (ID.length() != 10) {
+            System.out.println("Artist ID must be 10 characters long.");
+            return false;
+        }
+        return true;
+    }
+
+    public String getArtistID() {
+        if (setArtistID(ID)) {
+            System.out.println("getArtistID: " + ID);
+        }
+        return ID;
+    }
+    public String getBirthdate() {
+        System.out.println("getBirthdate: " + Birthdate);
+        return Birthdate;
+    }
 
 
 
