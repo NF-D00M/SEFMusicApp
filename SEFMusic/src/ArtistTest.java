@@ -21,8 +21,6 @@ class ArtistTest {
     ArrayList <String> ArtistFileGenre;
     ArrayList <String> ArtistFileAward = new ArrayList<>();
 
-
-
     public void TestAddArtist_TestCase1() {
 //        TEST VARIABLES
 //        Test Case 1 Data 1
@@ -350,7 +348,8 @@ class ArtistTest {
 //----------------------------------------------------------------------------
 //        Change this String(row) to select Artist in ArtistFile.txt
 //----------------------------------------------------------------------------
-        String[] ArtistSplit = Artist1.split("(?![^)(]*\\([^)(]*?\\)\\)), (?![^\\[]*])");
+        String[] ArtistSplit = Artist1.split("(?![^)(]*\\([^)(]*?\\)\\)), (?![^\\[]*])"); // First Artist
+//        String[] ArtistSplit = Artist2.split("(?![^)(]*\\([^)(]*?\\)\\)), (?![^\\[]*])"); // Second Artist
         ArtistFileID = ArtistSplit[0];
         ArtistFileName = ArtistSplit[1];
         ArtistFileAddress  = ArtistSplit[2];
@@ -389,7 +388,7 @@ class ArtistTest {
             ArtistFileAward.add(Award);
         }
 
-//        Test Case 5 Data 2
+//        Test Case 5 Data 1
         String ArtistID1 = ArtistFileID;
         String Name1 = ArtistFileName;
         String Address1 = ArtistFileAddress;
@@ -399,7 +398,17 @@ class ArtistTest {
         ArrayList<String> Genres1 = ArtistFileGenre;
         ArrayList<String> Awards1 = ArtistFileAward;
 
-        //        CREATE Artist Object
+//        Test Case 5 Data 2
+        String ArtistID2 = ArtistFileID;
+        String Name2 = ArtistFileName;
+        String Address2 = ArtistFileAddress;
+        String Birthdate2 = ArtistFileBirth;
+        String Bio2 = ArtistFileBio;
+        ArrayList<String> Occupations2 = ArtistFileOccupation;
+        ArrayList<String> Genres2 = ArtistFileGenre;
+        ArrayList<String> Awards2 = ArtistFileAward;
+
+//        CREATE Artist Object
 //        Object TestCase1_Data1
         Artist TestCase5_Data1 = new Artist(
                 ArtistID1,
@@ -411,15 +420,26 @@ class ArtistTest {
                 Genres1,
                 Awards1
         );
-        TestCase5_Data1.UpdateArtist();
-        System.out.println(TestCase5_Data1.ID + TestCase5_Data1.Awards);
-        System.out.println(TestCase5_Data1.Awards);
+//        TestCase5_Data1.UpdateArtist();
+        Artist TestCase5_Data2 = new Artist(
+                ArtistID2,
+                Name2,
+                Address2,
+                Birthdate2,
+                Bio2,
+                Occupations2,
+                Genres2,
+                Awards2
+        );
 
 
-
-
-
-
-
+//      ASSERTIONS
+        assertAll (
+                "Group Assertion for Test Case 5: UpdateArtist()",
+                () -> assertTrue(TestCase5_Data1.UpdateArtist()),
+                () -> assertEquals("666JANIN&&", TestCase5_Data1.ID),
+                () -> assertEquals("Adelaide|South Australia|Australia", TestCase5_Data1.Address)
+        );
+        System.out.println("Test Complete");
     }
 }

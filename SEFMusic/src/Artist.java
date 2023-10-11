@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 public class Artist {
@@ -21,7 +22,7 @@ public class Artist {
         Awards = awards;
     }
 
-    public boolean addArtist() {
+    public boolean addArtist() throws IOException {
 //        CONDITION 1.1
 //        Artist ID must be exactly 10 characters long.
         if (ID.length() != 10) {
@@ -146,6 +147,31 @@ public class Artist {
                 return false;
             }
         }
+//        System.out.println(
+//                ID + ", " +
+//                Name + ", " +
+//                Address + ", " +
+//                Birthdate + ", " +
+//                Bio + ", " +
+//                Occupations + ", " +
+//                Genres + ", " +
+//                Awards
+//                );
+
+        FileWriter fw = new FileWriter("src\\ArtistFile.txt", true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(ID + ", " +
+                Name + ", " +
+                Address + ", " +
+                Birthdate + ", " +
+                Bio + ", " +
+                Occupations + ", " +
+                Genres + ", " +
+                Awards
+        );
+        bw.newLine();
+        bw.close();
+        System.out.println("Artist Added");
         return true;
     }
 
@@ -292,7 +318,6 @@ public class Artist {
                 return false;
             }
         }
-
 
         System.out.println("Artist Updated");
         return true;
