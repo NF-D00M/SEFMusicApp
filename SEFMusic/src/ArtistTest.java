@@ -346,6 +346,10 @@ class ArtistTest {
         String Artist1 = ArtistDetailList.get(0);
         String Artist2 = ArtistDetailList.get(1);
 
+
+//----------------------------------------------------------------------------
+//        Change this String(row) to select Artist in ArtistFile.txt
+//----------------------------------------------------------------------------
         String[] ArtistSplit = Artist1.split("(?![^)(]*\\([^)(]*?\\)\\)), (?![^\\[]*])");
         ArtistFileID = ArtistSplit[0];
         ArtistFileName = ArtistSplit[1];

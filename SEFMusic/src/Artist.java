@@ -22,7 +22,7 @@ public class Artist {
     }
 
     public boolean addArtist() {
-//        CONDITION 1
+//        CONDITION 1.1
 //        Artist ID must be exactly 10 characters long.
         if (ID.length() != 10) {
             System.out.println("Artist ID must be 10 characters long.");
@@ -89,14 +89,14 @@ public class Artist {
             return false;
         }
 
-//        CONDITION 2
+//        CONDITION 1.2
 //        Artist Birthdate must match format [DD-MM-YYYY]
         if (!Birthdate.matches("([0-2][0-9]|3[0-1])-(0[0-9]|1[0-2])-([1-2][0-9][0-9][0-9])")) {
             System.out.println("Birthdate does not match format DD-MM-YYYY");
             return false;
         }
 
-        //        CONDITION 4
+    //        CONDITION 1.4
 //        The Artist Bio must be between 10 to 30 words
         StringTokenizer stringTokenizer1 = new StringTokenizer(Bio);
         int bioWords = stringTokenizer1.countTokens();
@@ -104,13 +104,13 @@ public class Artist {
             System.out.println("BioWords: " + bioWords + ". Bio must be less than 10 words or more than 30");
             return false;
         }
-//        CONDITION 5
+//        CONDITION 1.5
 //        The Artist Occupation must be
         if (Occupations.size() < 1 || Occupations.size() > 5) {
             System.out.println("Artist must have 1 occupation and no great than 5");
             return false;
         }
-//        CONDITION 7
+//        CONDITION 1.7
 //        Artist should be active in at least two music genres and a maximum of five genres.
         if (Genres.size() < 2 || Genres.size() > 5) {
             System.out.println("Artist must have 2 genres or maximum of 5");
@@ -122,7 +122,7 @@ public class Artist {
             return false;
         }
 
-        //        CONDITION 6
+    //        CONDITION 1.6
 //        Artist can only have maximum of three awards
         if (Awards.size() > 3) {
             System.out.println("Artist must have less than 3 awards");
@@ -150,7 +150,7 @@ public class Artist {
     }
 
     public boolean UpdateArtist() {
-        //        CONDITION 1
+        //        CONDITION 1.1
 //        Artist ID must be exactly 10 characters long.
         if (ID.length() != 10) {
             System.out.println("Artist ID must be 10 characters long.");
@@ -217,14 +217,14 @@ public class Artist {
             return false;
         }
 
-//        CONDITION 2
+//        CONDITION 1.2
 //        Artist Birthdate must match format [DD-MM-YYYY]
         if (!Birthdate.matches("([0-2][0-9]|3[0-1])-(0[0-9]|1[0-2])-([1-2][0-9][0-9][0-9])")) {
             System.out.println("Birthdate does not match format DD-MM-YYYY");
             return false;
         }
 
-        //        CONDITION 4
+//        CONDITION 1.4
 //        The Artist Bio must be between 10 to 30 words
         StringTokenizer stringTokenizer1 = new StringTokenizer(Bio);
         int bioWords = stringTokenizer1.countTokens();
@@ -232,13 +232,19 @@ public class Artist {
             System.out.println("BioWords: " + bioWords + ". Bio must be less than 10 words or more than 30");
             return false;
         }
-//        CONDITION 5
-//        The Artist Occupation must be
+//        CONDITION 1.5
+//        The Artist Occupation must be between 1 and 5
         if (Occupations.size() < 1 || Occupations.size() > 5) {
             System.out.println("Artist must have 1 occupation and no great than 5");
             return false;
         }
-//        CONDITION 7
+//        CONDITION 2.1
+        String BirthYear = Birthdate.substring(6,10);
+        if (Integer.parseInt(BirthYear) < 2000) {
+            System.out.println("Cannot change occupation if Artist Birth Year is before 2000");
+            return false;
+        }
+//        CONDITION 1.7
 //        Artist should be active in at least two music genres and a maximum of five genres.
         if (Genres.size() < 2 || Genres.size() > 5) {
             System.out.println("Artist must have 2 genres or maximum of 5");
@@ -250,7 +256,7 @@ public class Artist {
             return false;
         }
 
-        //        CONDITION 6
+//        CONDITION 1.6
 //        Artist can only have maximum of three awards
         if (Awards.size() > 3) {
             System.out.println("Artist must have less than 3 awards");
@@ -274,26 +280,23 @@ public class Artist {
                 return false;
             }
         }
-        
+//        CONDITION 1.3
+//        Awards given before 2000 can not be changed
+        for (String award : Awards) {
+            String[] AwardsSplit = award.split(", ");
+            String years = AwardsSplit[0];
+            String titles = AwardsSplit[1];
+            System.out.println(years);
+            if (Integer.parseInt(years) < 2000) {
+                System.out.println("The Award cannot be changed, Award Year is less than 2000");
+                return false;
+            }
+        }
+
+
         System.out.println("Artist Updated");
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
