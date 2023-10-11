@@ -1,39 +1,27 @@
 import org.junit.jupiter.api.Test;
+import sun.plugin.dom.css.Counter;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.*;
 
-import static java.util.Arrays.asList;
+import static java.lang.Integer.sum;
+import static java.util.Arrays.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArtistTest {
-    ArrayList <String> ArtistDetailList;
+    ArrayList <String> ArtistDetailList = new ArrayList<>();
+    String ArtistFileID;
+    String ArtistFileName;
+    String ArtistFileAddress;
+    String ArtistFileBirth;
+    String ArtistFileBio;
+    ArrayList <String> ArtistFileOccupation;
+    ArrayList <String> ArtistFileGenre;
+    ArrayList <String> ArtistFileAward = new ArrayList<>();
 
-    public void ReadFile() throws FileNotFoundException {
-            File myFile = new File("src\\ArtistFile.txt");
-            Scanner readFile = new Scanner(myFile);
-            ArrayList <String> ArtistsDetails = new ArrayList<>();
-            while (readFile.hasNextLine()) {
-                String ArtistLine = readFile.nextLine();
-//                System.out.println(ArtistLine);
-                ArtistsDetails.add(ArtistLine);
-                String ArtistSplit[] = ArtistLine.split(", ", 3);
-//                System.out.println("Split" + Arrays.toString(ArtistSplit));
-                String ArtistIDSplit = ArtistSplit[0];
-                StringBuilder sb = new StringBuilder(ArtistIDSplit);
-                sb.deleteCharAt(0);
-                System.out.println(sb);
 
-                String ArtistNameSplit = ArtistSplit[1];
-                String ArtistBerriers = ArtistSplit[2];
-//                System.out.println(ArtistIDSplit);
-                System.out.println(ArtistNameSplit);
-                System.out.println(ArtistBerriers);
-            }
-             System.out.println(ArtistsDetails);
-            ArtistDetailList = ArtistsDetails;
-        System.out.println("DEETS..." + ArtistsDetails);
-    }
 
     public void TestAddArtist_TestCase1() {
 //        TEST VARIABLES
@@ -345,10 +333,89 @@ class ArtistTest {
         );
         System.out.println("Test Complete");
     }
-
     @Test
-    public void TestAddArtist_TestCase5() {
+    public void TestUpdateArtist_TestCase5() throws FileNotFoundException {
+        File myFile = new File("src\\ArtistFile.txt");
+        Scanner readFile = new Scanner(myFile);
+        while (readFile.hasNextLine()) {
+            String ArtistLine = readFile.nextLine();
+              ArtistDetailList.add(ArtistLine);
+        }
+        System.out.println("This is Artist 1: " + ArtistDetailList.get(0));
+        System.out.println("This is Artist 2: " + ArtistDetailList.get(1));
+        String Artist1 = ArtistDetailList.get(0);
+        String Artist2 = ArtistDetailList.get(1);
+
+        String[] ArtistSplit = Artist1.split("(?![^)(]*\\([^)(]*?\\)\\)), (?![^\\[]*])");
+        ArtistFileID = ArtistSplit[0];
+        ArtistFileName = ArtistSplit[1];
+        ArtistFileAddress  = ArtistSplit[2];
+        ArtistFileBirth = ArtistSplit[3];
+        ArtistFileBio = ArtistSplit[4];
+
+//        Formatting Lists to pass through ArtistUpdate()
+//        Occupation List
+        String artistFileOccupation = ArtistSplit[5];
+        String OccStrip = artistFileOccupation.replaceAll("\\[", "").replaceAll("\\]", "");
+        String[] ArtistFileOccupationSplit = OccStrip.split(", ");
+        int ArtistOccupationListsize = ArtistFileOccupationSplit.length;
+        ArrayList ArtistFileOccupationList = new ArrayList<>();
+        for (int i = 0; i < ArtistOccupationListsize; i++) {
+            ArtistFileOccupationList.add(ArtistFileOccupationSplit[i]);
+        }
+        ArtistFileOccupation = ArtistFileOccupationList;
+
+//        Genre List
+        String artistFileGenre = ArtistSplit[6];
+        String GenreStrip = artistFileGenre.replaceAll("\\[", "").replaceAll("\\]", "");
+        String[] ArtistFileGenreSplit = GenreStrip.split(", ");
+        int ArtistGenreListSize = ArtistFileGenreSplit.length;
+        ArrayList ArtistFileGenreList = new ArrayList<>();
+        for (int i = 0; i < ArtistGenreListSize; i++) {
+            ArtistFileGenreList.add(ArtistFileGenreSplit[i]);
+        }
+        ArtistFileGenre = ArtistFileGenreList;
+//        Award List
+        String artistFileAwards = ArtistSplit[7];
+        String AwardsStrip = artistFileAwards.replaceAll("\\[", "").replaceAll("\\]", "");
+        String[] ArtistAwardSplit = AwardsStrip.split(", ");
+        int ArtistAwardSize = ArtistAwardSplit.length;
+        for (int i = 0; i < ArtistAwardSize; i++) {
+            String Award = ArtistAwardSplit[i++] + ", " + ArtistAwardSplit[i];
+            ArtistFileAward.add(Award);
+        }
+
+//        Test Case 5 Data 2
+        String ArtistID1 = ArtistFileID;
+        String Name1 = ArtistFileName;
+        String Address1 = ArtistFileAddress;
+        String Birthdate1 = ArtistFileBirth;
+        String Bio1 = ArtistFileBio;
+        ArrayList<String> Occupations1 = ArtistFileOccupation;
+        ArrayList<String> Genres1 = ArtistFileGenre;
+        ArrayList<String> Awards1 = ArtistFileAward;
+
+        //        CREATE Artist Object
+//        Object TestCase1_Data1
+        Artist TestCase5_Data1 = new Artist(
+                ArtistID1,
+                Name1,
+                Address1,
+                Birthdate1,
+                Bio1,
+                Occupations1,
+                Genres1,
+                Awards1
+        );
+        TestCase5_Data1.UpdateArtist();
+        System.out.println(TestCase5_Data1.ID + TestCase5_Data1.Awards);
+        System.out.println(TestCase5_Data1.Awards);
+
+
+
+
+
+
 
     }
-
 }
