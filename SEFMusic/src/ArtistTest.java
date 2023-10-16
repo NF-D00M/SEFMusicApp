@@ -1,3 +1,4 @@
+import com.sun.xml.internal.bind.v2.TODO;
 import org.junit.jupiter.api.Test;
 import sun.plugin.dom.css.Counter;
 
@@ -10,6 +11,7 @@ import static java.lang.Integer.sum;
 import static java.util.Arrays.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class ArtistTest {
     ArrayList <String> ArtistDetailList = new ArrayList<>();
     String ArtistFileID;
@@ -20,6 +22,8 @@ class ArtistTest {
     ArrayList <String> ArtistFileOccupation;
     ArrayList <String> ArtistFileGenre;
     ArrayList <String> ArtistFileAward = new ArrayList<>();
+    String ArtistInFile;
+
 
     public void TestAddArtist_TestCase1() {
 //        TEST VARIABLES
@@ -65,7 +69,8 @@ class ArtistTest {
                 Bio1,
                 Occupations1,
                 Genres1,
-                Awards1
+                Awards1,
+                null
         );
 //        TestCase1_Data1.addArtist();
 //        Object TestCase1_Data2
@@ -77,7 +82,8 @@ class ArtistTest {
                 Bio2,
                 Occupations2,
                 Genres2,
-                Awards2
+                Awards2,
+                null
         );
 //        TestCase1_Data2.addArtist();
 
@@ -89,7 +95,6 @@ class ArtistTest {
         );
         System.out.println("Test Complete");
     }
-
     public void TestAddArtist_TestCase2() {
 //        TEST VARIABLES
 //        Test Case 2 Data 1
@@ -134,7 +139,8 @@ class ArtistTest {
                 Bio1,
                 Occupations1,
                 Genres1,
-                Awards1
+                Awards1,
+                null
         );
 //        TestCase2_Data1.addArtist();
 //        Object TestCase1_Data2
@@ -146,7 +152,8 @@ class ArtistTest {
                 Bio2,
                 Occupations2,
                 Genres2,
-                Awards2
+                Awards2,
+                null
         );
 //        TestCase2_Data2.addArtist();
 
@@ -202,7 +209,8 @@ class ArtistTest {
                 Bio1,
                 Occupations1,
                 Genres1,
-                Awards1
+                Awards1,
+                null
         );
 //        TestCase3_Data1.addArtist();
 
@@ -215,7 +223,8 @@ class ArtistTest {
                 Bio2,
                 Occupations2,
                 Genres2,
-                Awards2
+                Awards2,
+                null
         );
 //        TestCase3_Data2.addArtist();
 
@@ -245,7 +254,6 @@ class ArtistTest {
         );
         System.out.println("Test Complete");
     }
-
     public void TestAddArtist_TestCase4() {
 //        TEST VARIABLES
 //        Test Case 4 Data 1
@@ -291,7 +299,8 @@ class ArtistTest {
                 Bio1,
                 Occupations1,
                 Genres1,
-                Awards1
+                Awards1,
+                null
         );
 //        TestCase4_Data1.addArtist();
 
@@ -304,7 +313,8 @@ class ArtistTest {
                 Bio2,
                 Occupations2,
                 Genres2,
-                Awards2
+                Awards2,
+                null
         );
 //        TestCase4_Data2.addArtist();
 //        ASSERTIONS
@@ -331,8 +341,7 @@ class ArtistTest {
         );
         System.out.println("Test Complete");
     }
-    @Test
-    public void TestUpdateArtist_TestCase5() throws FileNotFoundException {
+    public void TestUpdateArtist_TestCase5() throws IOException {
         File myFile = new File("src\\ArtistFile.txt");
         Scanner readFile = new Scanner(myFile);
         while (readFile.hasNextLine()) {
@@ -345,6 +354,7 @@ class ArtistTest {
         String Artist2 = ArtistDetailList.get(1);
 
 
+//        TODO: Create a second dataset for test case 2
 //----------------------------------------------------------------------------
 //        Change this String(row) to select Artist in ArtistFile.txt
 //----------------------------------------------------------------------------
@@ -396,7 +406,11 @@ class ArtistTest {
         String Bio1 = ArtistFileBio;
         ArrayList<String> Occupations1 = ArtistFileOccupation;
         ArrayList<String> Genres1 = ArtistFileGenre;
-        ArrayList<String> Awards1 = ArtistFileAward;
+        ArrayList<String> NewAwards = new ArrayList<>();
+        NewAwards.add("2000, Academy Award for Best Original Saxophone");
+        NewAwards.add("2023, Academy Award for Loudest Saxophone Ever");
+        ArrayList<String> Awards1 = NewAwards;
+        String ArtistInFile1 = Artist1;
 
 //        Test Case 5 Data 2
         String ArtistID2 = ArtistFileID;
@@ -404,9 +418,13 @@ class ArtistTest {
         String Address2 = ArtistFileAddress;
         String Birthdate2 = ArtistFileBirth;
         String Bio2 = ArtistFileBio;
-        ArrayList<String> Occupations2 = ArtistFileOccupation;
+        ArrayList<String> NewOccupations = new ArrayList<>();
+        NewOccupations.add("Producer");
+        NewOccupations.add("Mixer");
+        ArrayList<String> Occupations2 = NewOccupations;
         ArrayList<String> Genres2 = ArtistFileGenre;
         ArrayList<String> Awards2 = ArtistFileAward;
+        String ArtistInFile2 = Artist2;
 
 //        CREATE Artist Object
 //        Object TestCase1_Data1
@@ -418,9 +436,10 @@ class ArtistTest {
                 Bio1,
                 Occupations1,
                 Genres1,
-                Awards1
+                Awards1,
+                ArtistInFile1
         );
-//        TestCase5_Data1.UpdateArtist();
+
         Artist TestCase5_Data2 = new Artist(
                 ArtistID2,
                 Name2,
@@ -429,17 +448,168 @@ class ArtistTest {
                 Bio2,
                 Occupations2,
                 Genres2,
-                Awards2
+                Awards2,
+                ArtistInFile2
         );
 
 
 //      ASSERTIONS
+        List<String> AwardsExpected1 = asList(
+                "2000, Academy Award for Best Original Saxophone",
+                "2023, Academy Award for Loudest Saxophone Ever"
+        );
         assertAll (
                 "Group Assertion for Test Case 5: UpdateArtist()",
                 () -> assertTrue(TestCase5_Data1.UpdateArtist()),
-                () -> assertEquals("666JANIN&&", TestCase5_Data1.ID),
-                () -> assertEquals("Adelaide|South Australia|Australia", TestCase5_Data1.Address)
+                () -> assertEquals("555JANIN##", TestCase5_Data1.ID),
+                () -> assertEquals(AwardsExpected1, TestCase5_Data1.Awards)
         );
+
+//        List<String> OccupatonsExpected2 = asList(
+//                "Producer",
+//                "Mixer"
+//        );
+//        assertAll (
+//                "Group Assertion for Test Case 5: UpdateArtist()",
+//                () -> assertTrue(TestCase5_Data2.UpdateArtist()),
+//                () -> assertEquals("999HAYLE()", TestCase5_Data2.Awards),
+//                () -> assertEquals(OccupatonsExpected2, TestCase5_Data2.Occupations)
+//        );
+
         System.out.println("Test Complete");
     }
+    public void TestUpdateArtist_TestCase6() throws IOException {
+        File myFile = new File("src\\ArtistFile.txt");
+        Scanner readFile = new Scanner(myFile);
+        while (readFile.hasNextLine()) {
+            String ArtistLine = readFile.nextLine();
+            ArtistDetailList.add(ArtistLine);
+        }
+        System.out.println("This is Artist 1: " + ArtistDetailList.get(0));
+        System.out.println("This is Artist 2: " + ArtistDetailList.get(1));
+        System.out.println("This is Artist 3: " + ArtistDetailList.get(2));
+        System.out.println("This is Artist 4: " + ArtistDetailList.get(3));
+        String Artist1 = ArtistDetailList.get(0);
+        String Artist2 = ArtistDetailList.get(1);
+        String Artist3 = ArtistDetailList.get(2);
+        String Artist4 = ArtistDetailList.get(3);
+
+
+//----------------------------------------------------------------------------
+//        Change this String(row) to select Artist in ArtistFile.txt
+//----------------------------------------------------------------------------
+//        String[] ArtistSplit = Artist1.split("(?![^)(]*\\([^)(]*?\\)\\)), (?![^\\[]*])"); // First Artist
+//        String[] ArtistSplit = Artist2.split("(?![^)(]*\\([^)(]*?\\)\\)), (?![^\\[]*])"); // Second Artist
+//        String[] ArtistSplit = Artist3.split("(?![^)(]*\\([^)(]*?\\)\\)), (?![^\\[]*])"); // Second Artist
+          String[] ArtistSplit = Artist4.split("(?![^)(]*\\([^)(]*?\\)\\)), (?![^\\[]*])"); // Second Artist
+        ArtistFileID = ArtistSplit[0];
+        ArtistFileName = ArtistSplit[1];
+        ArtistFileAddress  = ArtistSplit[2];
+        ArtistFileBirth = ArtistSplit[3];
+        ArtistFileBio = ArtistSplit[4];
+
+//        Formatting Lists to pass through ArtistUpdate()
+//        Occupation List
+        String artistFileOccupation = ArtistSplit[5];
+        String OccStrip = artistFileOccupation.replaceAll("\\[", "").replaceAll("\\]", "");
+        String[] ArtistFileOccupationSplit = OccStrip.split(", ");
+        int ArtistOccupationListsize = ArtistFileOccupationSplit.length;
+        ArrayList ArtistFileOccupationList = new ArrayList<>();
+        for (int i = 0; i < ArtistOccupationListsize; i++) {
+            ArtistFileOccupationList.add(ArtistFileOccupationSplit[i]);
+        }
+        ArtistFileOccupation = ArtistFileOccupationList;
+
+//        Genre List
+        String artistFileGenre = ArtistSplit[6];
+        String GenreStrip = artistFileGenre.replaceAll("\\[", "").replaceAll("\\]", "");
+        String[] ArtistFileGenreSplit = GenreStrip.split(", ");
+        int ArtistGenreListSize = ArtistFileGenreSplit.length;
+        ArrayList ArtistFileGenreList = new ArrayList<>();
+        for (int i = 0; i < ArtistGenreListSize; i++) {
+            ArtistFileGenreList.add(ArtistFileGenreSplit[i]);
+        }
+        ArtistFileGenre = ArtistFileGenreList;
+//        Award List
+        String artistFileAwards = ArtistSplit[7];
+        String AwardsStrip = artistFileAwards.replaceAll("\\[", "").replaceAll("\\]", "");
+        String[] ArtistAwardSplit = AwardsStrip.split(", ");
+        int ArtistAwardSize = ArtistAwardSplit.length;
+        for (int i = 0; i < ArtistAwardSize; i++) {
+            String Award = ArtistAwardSplit[i++] + ", " + ArtistAwardSplit[i];
+            ArtistFileAward.add(Award);
+        }
+
+//        Test Case 5 Data 1
+        String ArtistID1 = ArtistFileID;
+        String Name1 = ArtistFileName;
+        String Address1 = ArtistFileAddress;
+        String Birthdate1 = ArtistFileBirth;
+        String Bio1 = ArtistFileBio;
+        ArrayList<String> Occupations1 = ArtistFileOccupation;
+        ArrayList<String> Genres1 = ArtistFileGenre;
+        ArrayList<String> NewAwards = new ArrayList<>();
+        NewAwards.add("1999, Academy Award for Best Sound Design");
+        ArrayList<String> Awards1 = NewAwards;
+        String ArtistInFile1 = Artist3;
+
+//        Test Case 5 Data 2
+        String ArtistID2 = ArtistFileID;
+        String Name2 = ArtistFileName;
+        String Address2 = ArtistFileAddress;
+        String Birthdate2 = ArtistFileBirth;
+        String Bio2 = ArtistFileBio;
+        ArrayList<String> NewOccupations = new ArrayList<>();
+        NewOccupations.add("Composer");
+        ArrayList<String> Occupations2 = NewOccupations;
+        ArrayList<String> Genres2 = ArtistFileGenre;
+        ArrayList<String> Awards2 = ArtistFileAward;
+        String ArtistInFile2 = Artist2;
+
+//        CREATE Artist Object
+//        Object TestCase1_Data1
+        Artist TestCase6_Data1 = new Artist(
+                ArtistID1,
+                Name1,
+                Address1,
+                Birthdate1,
+                Bio1,
+                Occupations1,
+                Genres1,
+                Awards1,
+                ArtistInFile1
+        );
+
+        Artist TestCase6_Data2 = new Artist(
+                ArtistID2,
+                Name2,
+                Address2,
+                Birthdate2,
+                Bio2,
+                Occupations2,
+                Genres2,
+                Awards2,
+                ArtistInFile2
+        );
+
+
+//      ASSERTIONS
+//        assertAll (
+//                "Group Assertion for Test Case 6: UpdateArtist()",
+//                () -> assertFalse(TestCase6_Data1.UpdateArtist(), "The Award cannot be changed, Award Year is less than 2000"),
+//                () -> assertEquals("888BENGA$$", TestCase6_Data1.ID)
+//        );
+//
+
+        assertAll (
+        "Group Assertion for Test Case 6: UpdateArtist()",
+                () -> assertFalse(TestCase6_Data2.UpdateArtist(), "Cannot change occupation if Artist Birth Year is before 2000"),
+                () -> assertEquals("09-09-1950", TestCase6_Data2.Birthdate),
+                () -> assertEquals("666LUCIG**", TestCase6_Data2.ID)
+        );
+
+        System.out.println("Test Complete");
+    }
+
 }
+

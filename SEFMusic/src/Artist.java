@@ -1,4 +1,9 @@
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Artist {
@@ -10,8 +15,9 @@ public class Artist {
     public ArrayList <String> Occupations;
     public ArrayList <String> Genres;
     public ArrayList <String> Awards;
+    String ArtistInFile;
 
-    public Artist (String id, String name, String address, String birthdate, String bio, ArrayList <String> occupations, ArrayList <String> genres, ArrayList <String> awards) {
+    public Artist (String id, String name, String address, String birthdate, String bio, ArrayList <String> occupations, ArrayList <String> genres, ArrayList <String> awards, String artistInFile) {
         ID = id;
         Name = name;
         Address = address;
@@ -20,6 +26,7 @@ public class Artist {
         Occupations = occupations;
         Genres = genres;
         Awards = awards;
+        ArtistInFile = artistInFile;
     }
 
     public boolean addArtist() throws IOException {
@@ -96,8 +103,16 @@ public class Artist {
             System.out.println("Birthdate does not match format DD-MM-YYYY");
             return false;
         }
+//        CONDITION 1.3
+//        Artist Address must match format "city|state|country"
+        if (!Address.matches("^[A-Za-z]+.*[A-Za-z]+.*[A-Za-z]")) {
+            System.out.println("Address does not match format");
+            return false;
+        }
 
-    //        CONDITION 1.4
+
+
+//        CONDITION 1.4
 //        The Artist Bio must be between 10 to 30 words
         StringTokenizer stringTokenizer1 = new StringTokenizer(Bio);
         int bioWords = stringTokenizer1.countTokens();
@@ -175,7 +190,7 @@ public class Artist {
         return true;
     }
 
-    public boolean UpdateArtist() {
+    public boolean UpdateArtist() throws IOException {
         //        CONDITION 1.1
 //        Artist ID must be exactly 10 characters long.
         if (ID.length() != 10) {
@@ -265,6 +280,7 @@ public class Artist {
             return false;
         }
 //        CONDITION 2.1
+//        Artist born before 2000 cannot update their occupation
         String BirthYear = Birthdate.substring(6,10);
         if (Integer.parseInt(BirthYear) < 2000) {
             System.out.println("Cannot change occupation if Artist Birth Year is before 2000");
@@ -311,15 +327,29 @@ public class Artist {
         for (String award : Awards) {
             String[] AwardsSplit = award.split(", ");
             String years = AwardsSplit[0];
-            String titles = AwardsSplit[1];
-            System.out.println(years);
             if (Integer.parseInt(years) < 2000) {
                 System.out.println("The Award cannot be changed, Award Year is less than 2000");
                 return false;
             }
         }
 
-        System.out.println("Artist Updated");
+        String UpdatedArtist =
+                ID + ", " +
+                Name + ", " +
+                Address + ", " +
+                Birthdate + ", " +
+                Bio + ", " +
+                Occupations + ", " +
+                Genres + ", " +
+                Awards;
+
+            Path path = Paths.get("src\\ArtistFile.txt");
+            Charset charset = StandardCharsets.UTF_8;
+            String content = new String(Files.readAllBytes(path), charset);
+            System.out.println("Previous Artist Details: " + ArtistInFile);
+            System.out.println("New Artist Details: " + UpdatedArtist);
+            content =  content.replace(ArtistInFile, UpdatedArtist);
+            Files.write(path, content.getBytes(charset));
         return true;
     }
 
